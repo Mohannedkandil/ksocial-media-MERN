@@ -6,6 +6,19 @@ module.exports = gql`
     body: String!
     createdAt: String!
     username: String!
+    comments: [Comment!]! # the inside (!) means that the array must contain 1 element
+    likes: [Like!]
+  }
+  type Comment {
+    id: ID!
+    body: String!
+    username: String!
+    createdAt: String!
+  }
+  type Like {
+    id: ID!
+    createdAt: String!
+    username: String!
   }
   type User {
     id: ID!
@@ -25,9 +38,12 @@ module.exports = gql`
     getPost(postId: ID!): Post
   }
   type Mutation {
-    register(registerInput: RegisterInput): User!
-    login(username: String!, password: String!): User!
-    createPost(body: String!): Post!
-    deletePost(postId: ID!): String!
+    register(registerInput: RegisterInput) : User!
+    login(username: String!, password: String!) : User!
+    createPost(body: String!) : Post!
+    deletePost(postId: ID!) : String!
+    createComment(postId: String!, body: String!) : Post!
+    deleteComment(postId: ID!, commentId: ID!) : Post!
+    likePost(postId: ID!) : Post! # will work as a toggle so not needed to make deleteLike 
   }
 `;
