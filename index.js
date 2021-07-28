@@ -9,6 +9,7 @@ const { MONGODB } = require('./config.js'); // Mongoo DB connection string
 const server = new ApolloServer({
     typeDefs : typeDefs,
     resolvers: resolvers,
+    context: ({ req }) => ({ req })
 });
 
 // connect with database
